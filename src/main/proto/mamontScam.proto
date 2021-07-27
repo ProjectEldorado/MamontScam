@@ -1,11 +1,11 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "com.example";
+option java_package = "com.nikego";
 option java_outer_classname = "MamontScam";
 option objc_class_prefix = "HLW";
 
-package com.example;
+package com.nikego;
 
 import "google/protobuf/empty.proto";
 import "google/protobuf/wrappers.proto";

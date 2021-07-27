@@ -1,8 +1,8 @@
 package com.nikego.service
 
-import com.example.BetsData
-import com.example.DataAdapterConfiguration
-import com.example.RxDataAdapterServiceGrpc
+import com.nikego.BetsData
+import com.nikego.DataAdapterConfiguration
+import com.nikego.RxDataAdapterServiceGrpc
 import io.reactivex.Single
 import javax.inject.Singleton
 

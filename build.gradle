@@ -18,7 +18,7 @@ micronaut {
     testRuntime("junit5")
     processing {
         incremental(true)
-        annotations("com.example.*")
+        annotations("com.nikego.*")
     }
 }
 
@@ -43,7 +43,7 @@ dependencies {
 
 
 application {
-    mainClass.set("com.example.ApplicationKt")
+    mainClass.set("com.nikego.ApplicationKt")
 }
 java {
     sourceCompatibility = JavaVersion.toVersion("11")
