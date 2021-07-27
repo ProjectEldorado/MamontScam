@@ -1,0 +1,7 @@
+micronaut:
+  application:
+    name: MamontScam
+
+grpc:
+  server:
+    port: 8080

@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.example";
+option java_outer_classname = "MamontScam";
+option objc_class_prefix = "HLW";
+
+package com.example;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/timestamp.proto";
+
+service DataAdapterService {
+  rpc LoadData (DataAdapterConfiguration) returns (BetsData);
+}
+
+message BetsData {
+  repeated UniBet UniBets = 1;
+  string CompanyName = 2;
+}
+
+message DataAdapterConfiguration {
+  repeated BetDiscipline Disciplines = 1;
+}
+
+enum BetDiscipline {
+  Football = 0;
+  CyberSport = 1;
+}
+
+enum BetType {
+  WinLose = 0;
+  Total = 1;
+}
+
+//Uni Data Format
+message UniBet {
+  string LocalId = 1;
+
+  google.protobuf.Timestamp EventDate = 2;
+  string EventName = 3;
+  BetDiscipline Discipline = 4;
+
+  string SiteUrl = 5;
+  bool IsLive = 6;
+
+  //First team Name could be < than Second Name Example (Astralis < Navi)
+  //That's very important for performance optimization
+  string FirstTeam = 7;
+  string SecondTeam = 8;
+
+  BetType BetType = 9;
+  oneof BetTypeData {
+    WinLoseBet WinLoseData = 10;
+    TotalBet TotalData = 11;
+  }
+}
+
+message WinLoseBet {
+  double FirstTeamCoefficient = 2;
+  double SecondTeamCoefficient = 4;
+  google.protobuf.DoubleValue DrawCoefficient = 5;
+}
+
+message TotalBet {
+  double TotalValue = 1;
+}
