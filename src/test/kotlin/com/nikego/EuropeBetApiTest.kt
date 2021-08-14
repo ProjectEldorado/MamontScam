@@ -2,6 +2,7 @@ package com.nikego
 
 import com.nikego.clients.EuropeBetApi
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
+import io.reactivex.schedulers.Schedulers
 import org.junit.jupiter.api.Test
 
 @MicronautTest
@@ -24,6 +25,7 @@ class EuropeBetApiTest(private val europeBetApi: EuropeBetApi) {
             .filter { it.sportId == 1 && it.matchCount > 0 }
             .map { it.id }
             .flatMap { europeBetApi.getBets(it) }
+            .subscribeOn(Schedulers.io())
             .toList()
             .blockingGet()
             .also {

@@ -1,10 +1,9 @@
 package com.nikego.repositories
 
 import com.nikego.clients.EuropeBetApi
-import com.nikego.mappers.europebet.EuropeBetMapper
 import com.nikego.model.base.BetCompany
 import com.nikego.model.base.uni.BetDiscipline
-import com.nikego.model.europebet.bets.EuropeBetData
+import com.nikego.utils.extensions.toUni
 import javax.inject.Singleton
 
 @Singleton
@@ -18,6 +17,5 @@ class EuropeBetRepository(private val europeBetApi: EuropeBetApi) {
                     .filterKeys { betDiscipline -> betDisciplines.contains(betDiscipline) }.containsValue(it.sportId)
             }
             .flatMap { europeBetApi.getBets(it.id) }
-            .toList()
-            .map { EuropeBetMapper.map(EuropeBetData(it)) }
+            .map { it.toUni() }
 }

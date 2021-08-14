@@ -1,0 +1,35 @@
+package com.nikego.utils.extensions
+
+import com.nikego.model.base.BetCompany
+import com.nikego.model.base.uni.BetType
+import com.nikego.model.base.uni.BetTypeData
+import com.nikego.model.base.uni.Uni
+import com.nikego.model.europebet.bets.EuropeBetBet
+import com.nikego.utils.Try
+import java.text.SimpleDateFormat
+
+
+fun EuropeBetBet.toUni() = Try.runSafely {
+    Uni(
+        localId = id.toString(),
+        eventDate = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").parse(startDate).time,
+        eventName = competitors?.joinToString(" - ") { it.name }
+            ?: throw IllegalArgumentException("null competitors"),
+        betDiscipline = BetCompany.BETCITY.betDisciplineToId.entries.find { it.value == sportId }?.key
+            ?: throw IllegalArgumentException("unsupported sport"),
+        siteUrl = "",
+        isLive = false,
+        firstTeam = competitors.first().name,
+        secondTeam = competitors.last().name,
+        betType = BetType.WIN_LOSE,
+        betTypeData = odds?.find { it.name == "1X2" }?.let {
+            BetTypeData.WinLoseBet(
+                firstTeamCoefficient = it.outcomes.find { it.outcome.contains("competitor1") }?.oddValue
+                    ?: throw IllegalArgumentException("null first coefficient"),
+                secondTeamCoefficient = it.outcomes.find { it.outcome.contains("competitor2") }?.oddValue
+                    ?: throw IllegalArgumentException("null second oefficient"),
+                drawCoefficient = it.outcomes.find { it.outcome == "X" }?.oddValue
+            )
+        } ?: throw IllegalArgumentException("coefficients not found")
+    )
+}

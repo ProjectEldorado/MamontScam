@@ -2,7 +2,7 @@ package com.nikego.utils
 
 import com.nikego.exceptions.NullNotAllowedException
 
-sealed class Try<T> {
+sealed class Try<out T> {
     private data class Success<T>(val value: T) : Try<T>()
     private data class Failure<Nothing>(val e: Exception) : Try<Nothing>()
 
@@ -18,10 +18,10 @@ sealed class Try<T> {
             is Failure -> onFailure(e)
         }
 
-    fun materialize(onFailure: (Exception) -> T) =
+    fun getOrNull() =
         when (this) {
             is Success -> value
-            is Failure -> onFailure(e)
+            is Failure -> null
         }
 
     companion object {
