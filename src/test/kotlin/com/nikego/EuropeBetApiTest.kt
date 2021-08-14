@@ -11,7 +11,10 @@ class EuropeBetApiTest(private val europeBetApi: EuropeBetApi) {
     fun testGetLeagues() {
         europeBetApi.getLeagues()
             .blockingGet()
-            .also { println(it) }
+            .also {
+                println(it)
+                println(it.filter { it.matchCount > 0 }.size)
+            }
     }
 
     @Test

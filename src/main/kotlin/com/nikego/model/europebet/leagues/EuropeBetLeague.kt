@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 data class EuropeBetLeague(
     @JsonProperty("categoryId") val categoryId: Int,
-    @JsonProperty("externalIds") val externalIds: EuropeBetExternalIds,
+    @JsonProperty("externalIds") val externalIds: EuropeBetExternalIds?,
     @JsonProperty("featured") val featured: Boolean,
     @JsonProperty("featuredPriority") val featuredPriority: Int,
     @JsonProperty("id") val id: Int,
