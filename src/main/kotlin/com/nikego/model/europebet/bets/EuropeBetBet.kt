@@ -15,7 +15,7 @@ data class EuropeBetBet(
     @JsonProperty("sportId") val sportId: Int,
     @JsonProperty("categoryId") val categoryId: Int,
     @JsonProperty("leagueId") val leagueId: Int,
-    @JsonProperty("score") val score: EuropeBetScore,
+    @JsonProperty("score") val score: EuropeBetScore?,
     @JsonProperty("externalIds") val externalIds: EuropeBetExternalIds?,
     @JsonProperty("oddsCount") val oddsCount: Int,
     @JsonProperty("totalOddsCount") val totalOddsCount: Int,
