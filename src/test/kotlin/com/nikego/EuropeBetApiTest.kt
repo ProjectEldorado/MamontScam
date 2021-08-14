@@ -2,7 +2,6 @@ package com.nikego
 
 import com.nikego.clients.EuropeBetApi
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
-import io.reactivex.Observable
 import org.junit.jupiter.api.Test
 
 @MicronautTest
@@ -11,6 +10,7 @@ class EuropeBetApiTest(private val europeBetApi: EuropeBetApi) {
     @Test
     fun testGetLeagues() {
         europeBetApi.getLeagues()
+            .toList()
             .blockingGet()
             .also {
                 println(it)
@@ -21,11 +21,9 @@ class EuropeBetApiTest(private val europeBetApi: EuropeBetApi) {
     @Test
     fun testGetBetsByLeague() {
         europeBetApi.getLeagues()
-            .map { it.filter { it.sportId == 1 && it.matchCount > 0 }.map { it.id } }
-            .flatMapObservable {
-                Observable.fromIterable(it)
-                    .flatMap { europeBetApi.getBets(it) }
-            }
+            .filter { it.sportId == 1 && it.matchCount > 0 }
+            .map { it.id }
+            .flatMap { europeBetApi.getBets(it) }
             .toList()
             .blockingGet()
             .also {
