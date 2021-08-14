@@ -1,4 +1,4 @@
-package com.nikego.base.model.uni
+package com.nikego.model.base.uni
 
 data class Uni(
     val localId: String,
@@ -9,5 +9,6 @@ data class Uni(
     val isLive: Boolean,
     val firstTeam: String,
     val secondTeam: String,
+    val betType:BetType,
     val betTypeData: BetTypeData
 )

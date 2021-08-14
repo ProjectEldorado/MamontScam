@@ -1,6 +1,6 @@
-package com.nikego.base
+package com.nikego.utils
 
-import com.nikego.base.exceptions.NullNotAllowedException
+import com.nikego.exceptions.NullNotAllowedException
 
 sealed class Try<T> {
     private data class Success<T>(val value: T) : Try<T>()

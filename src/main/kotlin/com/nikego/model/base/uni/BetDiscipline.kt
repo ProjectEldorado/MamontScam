@@ -1,4 +1,4 @@
-package com.nikego.base.model.uni
+package com.nikego.model.base.uni
 
 
 enum class BetDiscipline {

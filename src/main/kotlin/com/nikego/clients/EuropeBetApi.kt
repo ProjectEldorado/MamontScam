@@ -1,6 +1,6 @@
 package com.nikego.clients
 
-import com.nikego.configuration.EuropeBetConfiguration
+import com.nikego.configuration.europebet.EuropeBetConfiguration
 import com.nikego.model.europebet.bets.EuropeBetBet
 import com.nikego.model.europebet.leagues.EuropeBetLeague
 import io.micronaut.http.annotation.Get
