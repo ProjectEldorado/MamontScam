@@ -19,6 +19,6 @@ class DataAdapterGrpcService(private val mamontScamReshaet: MamontScamReshaet) :
             mamontRequest
                 .map { configuration -> BetRequest(configuration.disciplinesList.mapNotNull { it.toBetDiscipline() }) }
                 .flatMap { mamontScamReshaet.getBetsData(it) }
-                .map { betsData -> betsData.toBetsDataProto() }
+                .map { betsData -> betsData.random().toBetsDataProto() } //TODO proto should be changed
         } ?: Single.just(BetsData.getDefaultInstance())
 }

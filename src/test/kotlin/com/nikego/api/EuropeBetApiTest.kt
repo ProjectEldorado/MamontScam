@@ -1,4 +1,4 @@
-package com.nikego
+package com.nikego.api
 
 import com.nikego.clients.EuropeBetApi
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class EuropeBetApiTest(private val europeBetApi: EuropeBetApi) {
 
     @Test
-    fun testGetLeagues() {
+    fun `test get leagues`() {
         europeBetApi.getLeagues()
             .toList()
             .blockingGet()
@@ -20,7 +20,7 @@ class EuropeBetApiTest(private val europeBetApi: EuropeBetApi) {
     }
 
     @Test
-    fun testGetBetsByLeague() {
+    fun `test get bets`() {
         europeBetApi.getLeagues()
             .filter { it.sportId == 1 && it.matchCount > 0 }
             .map { it.id }

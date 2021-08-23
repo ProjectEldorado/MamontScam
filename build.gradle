@@ -12,6 +12,7 @@ group = "com.nikego"
 
 repositories {
     mavenCentral()
+    maven { url 'https://jitpack.io' }
 }
 
 micronaut {

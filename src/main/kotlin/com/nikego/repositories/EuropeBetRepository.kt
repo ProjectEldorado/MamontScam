@@ -12,8 +12,8 @@ class EuropeBetRepository(private val europeBetApi: EuropeBetApi) {
     fun getBetsData(betDisciplines: List<BetDiscipline>) =
         europeBetApi.getLeagues()
             .filter {
-                it.sportId in BetCompany.BETCITY.allowedDisciplineIds
-                        && BetCompany.BETCITY.betDisciplineToId
+                it.sportId in BetCompany.EUROPE_BET.allowedDisciplineIds
+                        && BetCompany.EUROPE_BET.betDisciplineToId
                     .filterKeys { betDiscipline -> betDisciplines.contains(betDiscipline) }.containsValue(it.sportId)
             }
             .flatMap { europeBetApi.getBets(it.id) }

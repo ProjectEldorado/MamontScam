@@ -7,7 +7,8 @@ enum class BetCompany(
     val allowedDisciplineIds: List<Int>,
     val betDisciplineToId: Map<BetDiscipline, Int>
 ) {
-    BETCITY("BetCity", listOf(1), mapOf(BetDiscipline.FOOTBALL to 1));
+    EUROPE_BET("BetCity", listOf(1), mapOf(BetDiscipline.FOOTBALL to 1)),
+    PLUS_MINUS("PlusMinus", listOf(5), mapOf(BetDiscipline.FOOTBALL to 1));
 
     fun fromCompanyName(name: String) =
         values().find { it.companyName.equals(name, ignoreCase = true) }
