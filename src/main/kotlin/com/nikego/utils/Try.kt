@@ -3,30 +3,27 @@ package com.nikego.utils
 import com.nikego.exceptions.NullNotAllowedException
 
 sealed class Try<out T> {
-    private data class Success<T>(val value: T) : Try<T>()
-    private data class Failure<Nothing>(val e: Exception) : Try<Nothing>()
+    data class Success<T>(val value: T) : Try<T>()
+    data class Failure(val e: Exception) : Try<Nothing>()
 
-    fun <R> map(transform: (T) -> R?) =
-        when (this) {
-            is Success -> runSafely { transform(value) }
-            is Failure -> Failure(e)
-        }
+    inline fun <R> map(crossinline transform: (T) -> R?): Try<R> =
+        flatMap { runSafely { transform(it) } }
 
-    fun <R> fold(onSuccess: (T) -> R, onFailure: (Exception) -> R) =
+    inline fun <R> flatMap(crossinline transform: (T) -> Try<R>): Try<R> =
+        fold({ transform(it) }, { this as Failure })
+
+    inline fun <R> fold(onSuccess: (T) -> R, onFailure: (Exception) -> R): R =
         when (this) {
             is Success -> onSuccess(value)
             is Failure -> onFailure(e)
         }
 
-    fun getOrNull() =
-        when (this) {
-            is Success -> value
-            is Failure -> null
-        }
+    fun getOrNull(): T? =
+        fold({ it }, { null })
 
     companion object {
 
-        fun <T> runSafely(f: () -> T?) = try {
+        inline fun <T> runSafely(f: () -> T?): Try<T> = try {
             f()?.let { Success(it) } ?: throw NullNotAllowedException()
         } catch (e: Exception) {
             Failure(e)
